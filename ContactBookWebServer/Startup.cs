@@ -17,6 +17,8 @@ namespace ContactBookWebServer
 {
     public class Startup
     {
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -29,6 +31,20 @@ namespace ContactBookWebServer
         {
             string connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Database=ContactsDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
             services.AddDbContext<ContactBookDbContext>(options => options.UseSqlServer(connectionString));
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: MyAllowSpecificOrigins,
+                                  builder =>
+                                  {
+                                      builder.WithOrigins("http://localhost",
+                                                          "https://localhost", 
+                                                          "http://localhost:8080",
+                                                          "https://localhost:8080"
+                                                          );
+                                  });
+            });
+
             services.AddControllers();
         }
 
@@ -43,6 +59,8 @@ namespace ContactBookWebServer
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors(MyAllowSpecificOrigins);
 
             app.UseAuthorization();
 

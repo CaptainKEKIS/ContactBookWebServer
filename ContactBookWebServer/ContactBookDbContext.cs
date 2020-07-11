@@ -10,7 +10,7 @@ namespace ContactBookWebServer
     {
         public ContactBookDbContext(DbContextOptions<ContactBookDbContext> options) : base(options)
         {
-            Database.EnsureCreated();
+            
         }
         
         public DbSet<Contact> Contacts { get; set; }
@@ -19,7 +19,7 @@ namespace ContactBookWebServer
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Database=ContactsDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+                optionsBuilder.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Database=ContactsDB;charset=utf8;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
             }
         }
     }

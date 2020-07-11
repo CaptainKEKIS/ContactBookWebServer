@@ -37,11 +37,11 @@ namespace ContactBookWebServer
                 options.AddPolicy(name: MyAllowSpecificOrigins,
                                   builder =>
                                   {
-                                      builder.WithOrigins("http://localhost",
-                                                          "https://localhost", 
+                                      builder.AllowAnyMethod().AllowAnyHeader().WithOrigins("http://localhost",
+                                                          "https://localhost",
                                                           "http://localhost:8080",
                                                           "https://localhost:8080"
-                                                          );
+                                                          ); ;
                                   });
             });
 
